@@ -1,12 +1,12 @@
-using Microsoft.AspNetCore.Mvc;
 using System;
-using Microsoft.AspNetCore.Routing;
-using System.IO;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
-using RestApiExample.Handlers;
+
+
 namespace RestApiExample.Controllers
 {
     [ApiController]
@@ -41,21 +41,21 @@ namespace RestApiExample.Controllers
 
             try
             {
-                _logger.LogInformation($"Server Action-Passing-Cancellation-Async Start, Text={inputText}");
+                _logger.LogInformation("Server Action-Passing-Cancellation-Async Start, Text={inputText}", inputText);
 
                 string result = await ActionWithCancellationAsync(inputText, cancellationToken);
 
-                _logger.LogInformation($"Server Action-Passing-Cancellation-Async completed, Text={inputText}");
+                _logger.LogInformation("Server Action-Passing-Cancellation-Async completed, Text={inputText}", inputText);
                 return result;
             }
             catch (OperationCanceledException ex1)
             {
-                _logger.LogInformation($"OperationCanceledException:{ex1.Message}");
+                _logger.LogInformation("OperationCanceledException:{message}", ex1.Message);
                 throw new Exception("Server Action cancelled1."); //REF:001
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Server Action-Passing-Cancellation-Async, Exception, Error:{ex.Message}");
+                _logger.LogInformation("Server Action-Passing-Cancellation-Async, Exception, Error:{message}", ex.Message);
                 throw;
             }
         }
@@ -64,7 +64,7 @@ namespace RestApiExample.Controllers
 
         public async Task<string> GetActionInternalCancellationAsync( string inputText) //[FromQuery]
         {
-            _logger.LogInformation($"Server Action-internal-Cancellation-Async Start, Text={inputText}");
+            _logger.LogInformation("Server Action-internal-Cancellation-Async Start, Text={inputText}", inputText);
 
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationTokenSource.CancelAfter(15000);
@@ -72,7 +72,7 @@ namespace RestApiExample.Controllers
 
             var result = await ActionWithCancellationAsync(inputText, cancellationToken);
 
-            _logger.LogInformation($"Server Action-Passing-Cancellation-Async completed, Text={inputText}");
+            _logger.LogInformation("Server Action-Passing-Cancellation-Async completed, Text={inputText}", inputText);
             return result;
         }
 
@@ -82,7 +82,7 @@ namespace RestApiExample.Controllers
         {
             try
             {
-                _logger.LogInformation($"Server Action-internal-Cancellation-Async Start, Text={inputText}");
+                _logger.LogInformation("Server Action-internal-Cancellation-Async Start, Text={inputText}", inputText);
 
                 _cancellationTokenSource = new CancellationTokenSource();
                 _cancellationTokenSource.CancelAfter(15000);
@@ -90,18 +90,18 @@ namespace RestApiExample.Controllers
 
                 var result = await ActionWithCancellationAsync(inputText, cancellationToken);
 
-                _logger.LogInformation($"Server Action-Passing-Cancellation-Async completed, Text={inputText}");
+                _logger.LogInformation("Server Action-Passing-Cancellation-Async completed, Text={inputText}", inputText);
 
                 return result;
             }
             catch (OperationCanceledException ex1)
             {
-                _logger.LogInformation($"OperationCanceledException:{ex1.Message}");
+                _logger.LogInformation("OperationCanceledException:{message}", ex1.Message);
                 throw new Exception("Server Action cancelled1."); //REF:001
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Exception:{ex.Message}");
+                _logger.LogInformation("Exception:{message}", ex.Message);
                 throw;
             }
         }
@@ -118,18 +118,18 @@ namespace RestApiExample.Controllers
 
         private async Task<string> ActionWithCancellationAsync(string? inputText, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Server Action Start");
+            _logger.LogInformation("Server Action Start");
 
             for (int i = 0; i < 50; i++)
             {
                 cancellationToken.ThrowIfCancellationRequested(); //cancellation
 
-                _logger.LogInformation($"Server Action loop: [{i}]");
+                _logger.LogInformation("Server Action loop: [{i}]", i);
 
                 await Task.Delay(1000, cancellationToken); //cancellation
             }
 
-            _logger.LogInformation($"Server Action Finished, Text:{inputText}");
+            _logger.LogInformation("Server Action Finished, Text:{inputText}", inputText);
 
             return $"Server Action Finished, Text={inputText}";
         }

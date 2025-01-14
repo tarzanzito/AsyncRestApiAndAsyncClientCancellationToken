@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Reflection;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using System.Net.Http;
+using System.Net.Http.Headers;
+
 
 namespace WinFormExample
 {
@@ -26,6 +18,7 @@ namespace WinFormExample
         private CancellationTokenSource? _cancellationTokenSource;
         private readonly int _cancellationTokenAfter = 25000;
         private readonly string _uriBase = $"https://localhost:7223/Example/action-passing-cancellation-async";
+
         #endregion
 
         #region Constructors
@@ -43,7 +36,7 @@ namespace WinFormExample
         {
             ChangeFormStatus(true);
         }
-        
+
         private void Form1_Activated(object sender, EventArgs e)
         {
             textBoxParam.Focus();
@@ -53,8 +46,8 @@ namespace WinFormExample
         {
             CancelCancellationToken();
         }
-        
-        private async void buttonRun_Click(object sender, EventArgs e)
+
+        private async void ButtonRun_Click(object sender, EventArgs e)
         {
             //bool isCancelled = false;
 
@@ -91,7 +84,7 @@ namespace WinFormExample
             }
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void ButtonCancel_Click(object sender, EventArgs e)
         {
             CancelCancellationToken();
             ChangeFormStatus(true);
@@ -127,7 +120,7 @@ namespace WinFormExample
             //SearchArtistsResult result = response.Result
             //    ?? throw new Exception("'GetArtistsByNameResponse.Result' is null");
 
-            return "result";
+            return httpResponseInfo;
         }
 
         private static async Task<string> CallRestApiGetAsync(string uri, CancellationToken cancellationToken)
@@ -153,18 +146,12 @@ namespace WinFormExample
         {
             ChangeFormStatus(false);
 
-            string msg;
-
-            switch (ex)
+            textBoxResponse.Text = ex switch
             {
-                default:
-                    msg = $"{ex.Message}";
-                    break;
+                Exception => $"{ex.Message}",
+                _ => $"{ex.Message}"
             };
-
-            textBoxResponse.Text = msg;
         }
-
 
         private void ChangeFormStatus(bool enabled)
         {
@@ -209,6 +196,5 @@ namespace WinFormExample
         }
 
         #endregion
-
     }
 }

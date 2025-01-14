@@ -47,7 +47,7 @@
             buttonRun.TabIndex = 0;
             buttonRun.Text = "Run Action";
             buttonRun.UseVisualStyleBackColor = true;
-            buttonRun.Click += buttonRun_Click;
+            buttonRun.Click += ButtonRun_Click;
             // 
             // buttonCancel
             // 
@@ -57,7 +57,7 @@
             buttonCancel.TabIndex = 1;
             buttonCancel.Text = "Cancel Action";
             buttonCancel.UseVisualStyleBackColor = true;
-            buttonCancel.Click += buttonCancel_Click;
+            buttonCancel.Click += ButtonCancel_Click;
             // 
             // label1
             // 

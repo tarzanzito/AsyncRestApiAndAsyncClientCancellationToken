@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,7 +45,7 @@ namespace RestApiExample.Handlers
 
                 string problemDetailsJson = JsonSerializer.Serialize(problemDetails, defaultJsonSerializerOptions);
 
-                _logger.LogError(exception, problemDetailsJson);
+                _logger.LogError(exception, "PoblemDetails:{problemDetails}", problemDetailsJson);
 
                 //response         
                 httpContext.Response.ContentType = defaultContentType;
@@ -56,7 +55,7 @@ namespace RestApiExample.Handlers
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, $"An exception has occurred in 'GlobalExceptionHandler':[{ex.Message}]");
+                _logger.LogCritical(ex, "An exception has occurred in 'GlobalExceptionHandler':[{Message}]", ex.Message);
             }
 
             // Return false to continue with the default behavior

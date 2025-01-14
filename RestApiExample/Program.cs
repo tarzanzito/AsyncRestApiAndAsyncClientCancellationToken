@@ -1,19 +1,11 @@
 
 using System;
-using System.IO;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Hosting.Server.Features;
-using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.Extensions.Hosting;
-using System.Text;
-using System.Diagnostics.Metrics;
-using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 using RestApiExample.Handlers;
-
 
 namespace RestApiExample
 {
@@ -66,7 +58,7 @@ namespace RestApiExample
             }
             catch (Exception ex)
             {
-                //Log.Fatal(ex, $"ERROR:[{ex.Message}]");
+                Console.WriteLine($"Main method error:[{ex.Message}]");
                 return 1;
             }
 
