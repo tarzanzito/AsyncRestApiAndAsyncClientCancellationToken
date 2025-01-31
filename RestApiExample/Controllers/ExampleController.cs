@@ -34,10 +34,10 @@ namespace RestApiExample.Controllers
         [HttpGet("action-passing-cancellation-async")]
         public async Task<string> GetActionPassingCancellationAsync(string? inputText, CancellationToken cancellationToken)
         {
-            //NET8 and using 'GlobalExceptionHandler : IExceptionHandler'
-            //When the client cancel the operation the server automatically generates an OperationCanceledException. It's OK,
-            //But in my tests the Exception OperationCanceledException is not sent to 'GlobalExceptionHandler.TryHandleAsync(...)'
-            //So i had to wrap the entire method with try catch to replace OperationCanceledException with Exception (REF:001)
+            //NET8 with using 'GlobalExceptionHandler : IExceptionHandler'
+            //When the client cancel the operation the server automatically generate an OperationCanceledException. It's OK.
+            //But in my tests the OperationCanceledException is not sent to 'GlobalExceptionHandler.TryHandleAsync(...)'
+            //To "solve" it i wrapped the entire method with try catch to replace OperationCanceledException with Exception (REF: 001)
 
             try
             {
