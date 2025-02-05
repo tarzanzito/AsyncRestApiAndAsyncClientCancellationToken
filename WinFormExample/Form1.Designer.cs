@@ -132,7 +132,9 @@
             Controls.Add(buttonCancel);
             Controls.Add(buttonRun);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "Form1";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Form1";
             Activated += Form1_Activated;
             FormClosing += Form1_FormClosing;

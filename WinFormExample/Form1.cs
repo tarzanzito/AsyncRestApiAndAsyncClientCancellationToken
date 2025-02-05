@@ -17,15 +17,19 @@ namespace WinFormExample
 
         private CancellationTokenSource? _cancellationTokenSource;
         private readonly int _cancellationTokenAfter = 25000;
-        private readonly string _uriBase = $"https://localhost:7223/Example/action-passing-cancellation-async";
+        private readonly string _apiUrl = $"https://localhost:7223";
 
         #endregion
 
         #region Constructors
 
-        public Form1()
+        public Form1(string apiUrl)
         {
+            _apiUrl = apiUrl;
+
             InitializeComponent();
+
+            Text = $"Url server is':{apiUrl}'";
         }
 
         #endregion
@@ -44,7 +48,13 @@ namespace WinFormExample
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            CancelCancellationToken();
+            try
+            {
+                CancelCancellationToken();
+            }
+            catch
+            {
+            }
         }
 
         private async void ButtonRun_Click(object sender, EventArgs e)
@@ -96,7 +106,9 @@ namespace WinFormExample
 
         private async Task<string> ActionRunsync(string text, CancellationToken cancellationToken)
         {
-            var uriBuilder = new UriBuilder(_uriBase);
+            string url = $"{_apiUrl}/Example/action-passing-cancellation-async";
+
+            var uriBuilder = new UriBuilder(url);
             var query = HttpUtility.ParseQueryString(uriBuilder.Query);
 
             if (textBoxParam.Text.Trim() != string.Empty)

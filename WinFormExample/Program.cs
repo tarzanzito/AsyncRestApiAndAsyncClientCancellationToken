@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Configuration;
 using System.Windows.Forms;
 
 
@@ -16,9 +17,14 @@ namespace WinFormExample
 
             try
             {
-                Application.EnableVisualStyles(); //native
+                string? apiUrl = ConfigurationManager.AppSettings["ApiUrl"] ??
+                    throw new Exception("Entry 'ApiUrl' not found in 'app.config'");
+                
+                //if (Uri.IsWellFormedUriString(apiUrl, UriKind.Absolute))
+
+                    Application.EnableVisualStyles(); //native
                 Application.SetCompatibleTextRenderingDefault(false);  //native
-                Application.Run(new Form1()); //native
+                Application.Run(new Form1(apiUrl)); //native
             }
             catch (Exception ex)
             {

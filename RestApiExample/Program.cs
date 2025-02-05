@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RestApiExample.Handlers;
+using static System.Net.WebRequestMethods;
 
 namespace RestApiExample
 {
@@ -18,6 +19,19 @@ namespace RestApiExample
             try
             {
                 var builder = WebApplication.CreateBuilder(args); //native
+
+                var apiUrl = builder.Configuration["URLS"]; //only work in debug mode
+                var apiUrl1 = builder.Configuration["Kestrel:Endpoints:HttpEndpoint:Url"];
+                var apiUrl2 = builder.Configuration["Kestrel:Endpoints:HttpsEndpoint:Url"];
+
+                Console.WriteLine("URL0:" + apiUrl);
+                Console.WriteLine("URL1:" + apiUrl1);
+                Console.WriteLine("URL2:" + apiUrl2);
+
+                //var configurationSection = builder.Configuration.GetChildren();
+                //foreach(var x in configurationSection)
+                //    Console.WriteLine(x.Key + "|" + x.Path + "|" + x.Value);
+
 
                 //Add services to the container.
                 //builder.Services.AddAuthorization(); //native
